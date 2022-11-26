@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin-bottom: 16px;
+}
+
+html, body {
+    height: 100%;
+}
+
+.site-container {
+    // background-color: #EFA7A7;
+    margin: 0 auto;
+    max-width: 1250px;
+    min-height: 500px;
+}
+
+.button {
+    background-color: #FFD972;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 158px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Caveat-regular;
+    font-size: 25px;
+    color: #000;
+    box-shadow: 0px 8px 3px rgba($color: #000000, $alpha: .2);
+}
+
+.btn {
+    background-color: #FFD972;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 128px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Caveat-regular;
+    font-size: 25px;
+    color: #000;
+    box-shadow: 0px 8px 3px rgba($color: #000000, $alpha: .2);
+}
+
+
+
+@font-face {
+    font-family: Caveat-Regular;
+    src: url(../css/fonts/Caveat-Regular.ttf);
+}
+
+@font-face {
+    font-family: Caveat-Bold;
+    src: url(../css/fonts/Caveat-Bold.ttf);
+}
+
+@font-face {
+    font-family: Lato-Bold;
+    src: url(../css/fonts/Lato-Bold.ttf);
+}
+
+@font-face {
+    font-family: Lato-Regular;
+    src: url(../css/fonts/Lato-Regular.ttf);
+}
+
+@font-face {
+    font-family: Lato-Italic;
+    src: url(../css/fonts/Lato-Italic.ttf);
+}
+
+@font-face {
+    font-family: Lato-Light;
+    src: url(../css/fonts/Lato-Light.ttf);
+}
+
+@font-face {
+    font-family: Lato-Black;
+    src: url(../css/fonts/Lato-Black.ttf);
+}
+

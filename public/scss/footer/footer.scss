@@ -1,0 +1,116 @@
+
+    footer {
+        margin: 0 auto;
+        // background-color: aqua;
+        margin-top: -44px;
+        max-width: 1250px;
+        min-height: 44px;
+        z-index: 99;
+        // margin-top: ;
+
+        .footer-container {
+            position: relative;
+            // background-color: burlywood;
+            margin: 0 auto;
+            max-width: 1195px;
+            min-height: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            font-family: Lato-Italic;
+            font-size: 15px;
+            letter-spacing: 1px;
+            line-height: 30px;
+
+            .copyright {
+                width: 266px;
+                min-height: 30px;
+                // background-color: brown;
+            }
+        
+            .footer-links {
+                max-width: 638px;
+                min-height: 30px;
+                // background-color: blueviolet;
+                a {
+                    padding-right: 10px;
+                    padding-left: 10px;
+                }
+            }
+
+            .social {
+                // background-color: chocolate;
+                width: 79px;
+                min-height: 30px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                
+                
+                img {
+                    width: 19px;
+                    height: 19px;
+                }
+            }
+        }
+    }
+
+@media only screen and (max-width: 977px) {
+    footer {
+        margin-top: -70px;
+    }
+
+    .home {
+        .hero-image {
+            min-height: 950px;
+        }
+    }
+}
+
+@media only screen and (max-width: 982px) {
+    footer {
+        .footer-container {
+            justify-content: space-evenly;
+        }
+    }
+}
+
+@media only screen and (max-width: 938px) {
+    footer {
+        .footer-container {
+            padding-left: 20px;
+            padding-right: 20px;
+            justify-content: unset;
+            
+            .social {
+                position: absolute;
+                margin-left: 200px;
+                right: 20px;
+                top: 0;
+            }
+        }
+
+        .footer-links {
+            // position: relative;
+            // left: 0;
+            text-align: center;
+            margin: 0 auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 501px) {
+    footer {
+        .footer-links {
+            width: 450px;
+            
+        }
+    }
+}
+
+@media only screen and (max-width: 672px) {
+    footer {
+        margin-top: -100px;
+    }
+}

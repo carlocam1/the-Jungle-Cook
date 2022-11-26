@@ -1,0 +1,120 @@
+.view-recipe {
+    width: 100%;
+    min-height: 500px;
+    padding-top: 243px;
+    // background-color: aqua;
+
+    .viewRecipe-cont {
+        max-width: 968px;
+        min-height: 300px;
+        // margin-left: 134px;
+        margin: 0 auto;
+        // background-color: pink;
+
+        .button-holder {
+            margin-bottom: 137px;
+        }
+    }
+
+    .img-desc {
+        width: 100%;
+        min-height: 421px;
+        // background-color: cadetblue;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 66px;
+        // flex-wrap: wrap;
+    }
+
+    @media only screen and (max-width: 1000px) {
+
+        .viewRecipe-cont {
+            width: 468px;
+        }
+
+        .img-desc {
+            flex-direction: column;
+            margin-bottom: 66px;
+            // width: 468px;
+            // align-items: center;
+        }   
+    }
+
+    @media only screen and (max-width: 500px) {
+
+        .viewRecipe-cont {
+            width: 280px;
+
+            .img-desc {
+                .img-left {
+                    width: 251px;
+                    height: 226px;
+                }
+            }
+        }
+    }
+
+    .img-left {
+        width: 468px;
+        height: 421px;
+        // background-color: coral;
+        background-image: url(../images/recipe-pizza.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .desc-right {
+        max-width: 455px;
+        height: 100%;
+        font-family: Lato-Black;
+        // background-color:red;
+        font-size: 20px;
+
+        .viewRecipe-title {
+            font-size: 25px; 
+            margin-bottom: 36px;   
+        }
+
+        .brief-description {
+            font-family: Caveat-Regular;
+            // margin-bottom: 45px;
+            // background-color: aliceblue;
+        }
+
+        h4 {
+            font-family: Caveat-Regular;
+            margin-top: 40px;
+            margin-bottom: 0;
+            // background-color: aquamarine;
+        }
+
+        .time-servings {
+            margin-top: 46px;
+            // margin-bottom: 50px;
+            // background-color: aliceblue;
+        }
+
+        .total-servings {
+
+        }
+    }
+
+    .ingred-instr {
+        width: 100%;
+        min-height: 176px;
+        margin-bottom: 66px;
+        // background-color: cornflowerblue;
+
+        .viewRecipe-title {
+            font-family: Lato-Black;
+            font-size: 25px;
+            margin-bottom: 35px;
+        }
+
+        h4 {
+            font-family: Caveat-Regular;
+        }
+    }
+}
+
