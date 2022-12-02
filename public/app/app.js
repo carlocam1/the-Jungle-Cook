@@ -1,9 +1,10 @@
-import { changePageContent,browsePageContent,viewRecipe, yourRecipe, editRecipe, createRecipe, userIslogin, userIsSignOut, loginPage } from "../model/model.js";
+import { changePageContent,browsePageContent, yourRecipe, createRecipe, userIslogin, userIsSignOut, loginPage } from "../model/model.js";
 
 
 var _db = "";
 var userExists = false;
 var userFullName = "";
+var userN = "";
 var _userProfileInfo = {};
 
 function changeRoute(){
@@ -17,22 +18,48 @@ window.loadData = function(){
     initListeners(); 
 }
 
-window.addMainList = function(){
-  let newListName = $("listName").val();
-  let newListObj = {
-    name: newListName,
-    listItems: [],
-  };
+window.loadListItems = function (){
+  console.log("Inside loadListItems() function")
+}
 
-  _userProfileInfo.lists.push(newListObj);
-  updateUserInfo(_userProfileInfo);
-  loadLists();
-  $("listName").val("");
+window.loadLists = function(){
+  console.log("this is inside window.loadList ");
+
+  console.log("User Profile info", _userProfileInfo);
+
+  // let listString = `<ul>`;
+  // $.each(_userProfileInfo.list, function(idx, listItem) {
+  //   listString += `<li id="${idx}" onclick="loadListItems(${idx})">${listItem.name}
+  //   <span class="right">items: ${listItem.listItems.length}</span></li>`;
+  // });
+  // listString += "</ul>";
+  // $("#app").html(listString);
 
 }
 
+window.addMainList = function(newListObj){
+  console.log("Inside addMainList")
+  // let newListName = $("#listName").val();
+
+  console.log("Object after asigning variables inside addListItems()-----")
+  console.log(newListObj);
+  console.log("User Profile Info Inside addMainList >>>>>>>>")
+  
+  console.log(_userProfileInfo)
+  _userProfileInfo.list.push(newListObj);
+  updateUserInfo(_userProfileInfo);
+  // loadLists();
+  // $("listName").val("");
+
+}
+
+window.getUserProfile = function(_userLists) {
+  _userLists = _userProfileInfo;
+  return _userLists;
+}
+
 window.updateUserInfo = function (userObj) {
-  let id = firebse.auth().currentUser.uid;
+  let id = firebase.auth().currentUser.uid;
   _db
   .collection("Users")
   .doc(id).update(userObj)
@@ -65,11 +92,12 @@ window.initListeners = function(){
 
         $("#createRecipe").click(function(e){
             console.log("click create Recipe ");
-            createRecipe();
+            console.log("User full name" + userN);
+            createRecipe(userN);
         });
 
         $("#yourRecipe").click(function(e){
-            yourRecipe();
+            yourRecipe(_userProfileInfo);
         });
 
         $("#editRecipe").click(function(e){
@@ -79,16 +107,12 @@ window.initListeners = function(){
           
         $("#viewRecipe").click(function(e){
             console.log("clicked View Recipe ");
-            viewRecipe();
+            viewRecipe(_userProfileInfo);
         });
     
         $("#login").click(function(e){
             console.log("click login ");
             loginPage();
-            // $.get(`pages/login/login.html`, function (data) {
-            //     // console.log("data " + data);
-            //     $("#app").html(data);
-            // }); 
         });
 
 }
@@ -107,29 +131,57 @@ window.barListeners = function (){
   });
 }
 
-
+window.getUserDoc = function (){
+  let id = firebase.auth().currentUser.uid;
+  _db
+    .collection("Users")
+    .doc(id)
+    .get()
+    .then((doc) => {
+      console.log(doc.data());
+      _userProfileInfo = doc.data();
+      // console.log("Before loadLists() inside login Account function")
+      // loadLists();
+      console.log("Inside getUserDoc() >>>>>>>", _userProfileInfo);
+    })
+}
 
 function initFirebase(){
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {   
         if(user){
             _db = firebase.firestore();
+            // signIn();
             console.log("auth change logged in")
+            getUserDoc();
+            // alert("logged in")
             if(!user.displayName) {
                 userName = "";
+                signOut();
             }
             if(user.displayName){
                 $(".name").html(user.displayName);
                 var userName = user.displayName;
+                userN = userName;
             }
 
+            if(!_userProfileInfo)
+            {
+              console.log("User profile is undefine ----->>>>")
+            }
+
+
+            // displays the updated nav links
+            // changes the button to log out
             userIslogin(userName);
-            console.log("User Name " + userName);
+            console.log("User Name ---->> " + userName);
+            console.log(_userProfileInfo);
            
             // userIsSignOut();
             userExists = true;
         }
         else {
             console.log("auth change logged out")
+            alert("logged Out")
             _db = "";
             _userProfileInfo = {};
             $(".name").html("Hello!");
@@ -144,7 +196,7 @@ function initFirebase(){
 window.signOut = function (){
   firebase.auth().signOut()
   .then(() => {
-    console.log("signed out");
+    console.log("signed out --> in app file");
     userIsSignOut();
   })
   .catch((error) => {
@@ -175,10 +227,11 @@ window.createAccount = function(){
     // Signed in 
     var user = userCredential.user;
     console.log("created")
+    alert("Account Created")
     firebase.auth().currentUser.updateProfile({
         displayName: fullName,
     });
-
+    
     _db.
     collection("Users")
     .doc(user.uid)
@@ -210,14 +263,15 @@ window.createAccount = function(){
 }
 
 window.loginAccount = function(){
-    console.log("login Account")
+    console.log("login Account >>>>>>")
     let email = $("#email").val();
     let password = $("#password").val();
+    loadData();
     firebase.auth().signInWithEmailAndPassword(email, password)
   .then((userCredential) => {
     // Signed in
     var user = userCredential.user;
-    console.log("logged in")
+    console.log("logged in >>>>>>>")
     $("#email").val("");
     $("#password").val("");
 
@@ -228,26 +282,41 @@ window.loginAccount = function(){
     .then((doc) => {
       console.log(doc.data());
       _userProfileInfo = doc.data();
-      // loadLists();
-      console.log("login userinfo ", _userProfileInfo);
+      console.log("Before loadLists() inside login Account function")
+      loadLists();
+      console.log("login userinfo >>>>>>>", _userProfileInfo);
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log("logged in error" + errorMessage);
+      console.log("logged in error " + errorMessage);
     });
   })
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
     console.log("logged in error" + errorMessage);
+    alert("Please enter your email and password")
   });
 }
 
 window.signIn = function(){
+    console.log("Function call from model signIn()#########")
     firebase.auth().signInAnonymously()
-  .then(() => {
+  .then((userCredential) => {
     console.log("signed in");
+    var user = userCredential.user;
+
+    _db
+    .collection("Users")
+    .doc(user.uid)
+    .get()
+    .then((doc) => {
+      console.log(doc.data());
+      _userProfileInfo = doc.data();
+      // loadLists();
+      console.log("Inside sign in() >>>>>>>", _userProfileInfo);
+    })
   })
   .catch((error) => {
     var errorCode = error.code;
@@ -267,6 +336,4 @@ $(document).ready(function(){
     catch(error){
         console.log("error " + error);
     }
-        // loadData();
-    
 });
