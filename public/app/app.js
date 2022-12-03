@@ -6,6 +6,8 @@ var userExists = false;
 var userFullName = "";
 var userN = "";
 var _userProfileInfo = {};
+var newAccountCreated = false;
+let fullName = "";
 
 function changeRoute(){
     changePageContent();
@@ -26,14 +28,6 @@ window.loadLists = function(){
   console.log("this is inside window.loadList ");
 
   console.log("User Profile info", _userProfileInfo);
-
-  // let listString = `<ul>`;
-  // $.each(_userProfileInfo.list, function(idx, listItem) {
-  //   listString += `<li id="${idx}" onclick="loadListItems(${idx})">${listItem.name}
-  //   <span class="right">items: ${listItem.listItems.length}</span></li>`;
-  // });
-  // listString += "</ul>";
-  // $("#app").html(listString);
 
 }
 
@@ -132,6 +126,9 @@ window.barListeners = function (){
 }
 
 window.getUserDoc = function (){
+  if(!_userProfileInfo){
+    return;
+  }
   let id = firebase.auth().currentUser.uid;
   _db
     .collection("Users")
@@ -153,22 +150,12 @@ function initFirebase(){
             // signIn();
             console.log("auth change logged in")
             getUserDoc();
-            // alert("logged in")
-            if(!user.displayName) {
-                userName = "";
-                signOut();
-            }
+
             if(user.displayName){
                 $(".name").html(user.displayName);
                 var userName = user.displayName;
                 userN = userName;
             }
-
-            if(!_userProfileInfo)
-            {
-              console.log("User profile is undefine ----->>>>")
-            }
-
 
             // displays the updated nav links
             // changes the button to log out
@@ -178,7 +165,9 @@ function initFirebase(){
            
             // userIsSignOut();
             userExists = true;
-        }
+          }
+
+        // }
         else {
             console.log("auth change logged out")
             alert("logged Out")
@@ -208,11 +197,12 @@ window.signOut = function (){
 
 window.createAccount = function(){
     console.log("create account---");
+    newAccountCreated = true;
     let fName = $("#fName").val();
     let lName = $("#lName").val();
     let email = $("#signup-email").val();
     let password = $("#signup-password").val();
-    let fullName = fName + " " + lName;
+    fullName = fName + " " + lName;
     let userObj = {
       firstName: fName,
       lastName: lName,
@@ -231,7 +221,7 @@ window.createAccount = function(){
     firebase.auth().currentUser.updateProfile({
         displayName: fullName,
     });
-    
+
     _db.
     collection("Users")
     .doc(user.uid)
@@ -246,6 +236,14 @@ window.createAccount = function(){
       var errorMessage = error.message;
       console.log("create error " + errorMessage);
     });
+    
+    // -------------------------------------------- 
+    if(!user.displayName) {
+      console.log("inside !user.displayName ----> ", !user.displayName)
+      // userName = "";   
+      // signOut();
+    }
+    // -------------------------------------------- 
 
     userFullName = fullName;
     $(".name").html(userFullName);

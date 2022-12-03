@@ -82,6 +82,7 @@ var LISTS = [
 var userExists = false;
 let _userProfileInfo;
 
+
 export function userIslogin(userName) {
   console.log("log out button");
   $(".links").html(`
@@ -99,10 +100,6 @@ export function userIslogin(userName) {
 </a>
 <a id="yourRecipe" href="#yourRecipe"
   >Your Recipe
-  <div class="line"></div>
-</a>
-<a id="editRecipe" href="#editRecipe"
-  >Edit Recipe
   <div class="line"></div>
 </a>
 <a id="login" href="#login">
@@ -1019,7 +1016,7 @@ export function createRecipe(userFullName){
 
 export function yourRecipe(newRecipe){
   
-    if(!newRecipe.list[0]){
+    if(!newRecipe){
       console.log("if no recipe ***********")
       $("#app").html(`<div class="browse recipe-hero">
       <div class="recipe-header">Hi! you do not have any recipes yet. recipes</div>
@@ -1059,40 +1056,6 @@ export function yourRecipe(newRecipe){
     console.log(newRecipe);
     $("#app").html("");
 
-    // $.each(newRecipe.list, function(idx, recipe){
-    //   $("#app").append(`<div  id="${idx}" class="browse recipe-hero">
-    //   <div class="recipe-header">Recipes: Hey here are your recipes</div>
-    //   <div class="recipes">
-    //     <div class="wrap">
-    //       <div class="recipe-cont">
-    //         <div class="recipe-img">
-    //           <div id="viewRecipes" onclick="viewRecipe(${idx})" class="btn view">View</div>
-    //         </div>
-    //         <div class="recipe-desc">
-    //           <div class="recipe-title">${recipe.name}</div>
-    //           <div class="brief-desc">
-    //             ${recipe.description}
-    //           </div>
-    //           <div class="time">
-    //             <img src="/images/time.svg" alt="" />
-    //             ${recipe.totalTime}
-    //           </div>
-    //           <div class="servings">
-    //             <img src="/images/servings.svg" alt="" />
-    //             ${recipe.size}
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div class="button-holder">
-    //         <div id="edRecipe" onclick="editRecipe(${idx})"class="btn">Edit Recipe</div>
-    //         <div id="deRecipe" onclick="deleteItem(${idx})" class="btn">Delete</div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>`);
-    // // index = idx;
-    // });
-
     $("#app").html(`
     <div class="browse recipe-hero">
       <div class="recipe-header">Recipes: Hey here are your recipes</div>
@@ -1106,7 +1069,6 @@ export function yourRecipe(newRecipe){
     $.each(newRecipe.list, function(idx, recipe){
       console.log("index inside the each loop -----????,", idx)
       $("#app .wrap").append(`
-        <div id="${idx}" class="wrap">
           <div class="recipe-cont">
             <div class="recipe-img">
               <div id="viewRecipes" onclick="viewRecipe(${idx})" class="btn view">View</div>
@@ -1129,8 +1091,7 @@ export function yourRecipe(newRecipe){
           <div class="button-holder">
             <div id="edRecipe" onclick="editRecipe(${idx})"class="btn">Edit Recipe</div>
             <div id="deRecipe" onclick="deleteItem(${idx})" class="btn">Delete</div>
-          </div>
-        </div>`);
+          </div>`);
     // index = idx;
     });
 
